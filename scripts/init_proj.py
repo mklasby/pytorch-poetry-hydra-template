@@ -32,10 +32,11 @@ def patch_token(match, inputs):
 def patch_file(child, inputs):
     if child.name in _SKIP_FILES:
         return
-    with open(child, "r") as handle:
+    with open(child, "r+") as handle:
         file_text = handle.read()
         for k in inputs.keys():
             re.sub(k, functools.partial(patch_token, inputs=inputs), file_text)
+        handle.write(file_text)
         
     return
 
