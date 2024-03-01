@@ -1,61 +1,19 @@
-# condensed-sparsity
-![CI Pipeline](https://github.com/calgaryml/condensed-sparsity/actions/workflows/ci.yaml/badge.svg)
-![CD Pipeline](https://github.com/calgaryml/condensed-sparsity/actions/workflows/cd.yaml/badge.svg)
+# <project-name>
+![CI Pipeline](https://github.com/calgaryml/pytorch-poetry-hydra-template/actions/workflows/ci.yaml/badge.svg)
+![CD Pipeline](https://github.com/calgaryml/pytorch-poetry-hydra-template/actions/workflows/cd.yaml/badge.svg)
 
 
 ## Repository Structure
-* ./src/rigl_torch contains the source code for SRigL. 
-* ./src/condensed_sparsity contains the source code for our naive pytorch GEMM implementation that leverages the constant fan-in structure learned by SRigL. 
-* ./configs/config.yaml contains the settings for the various hyperparameters and runtime options. 
-
-## Example Commands
-* ResNet50 trained on Imagenet using 4-GPUs on a single node:
-
-```bash
-python ./train_rigl.py \
-    dataset=imagenet \
-    model=resnet50
-```
-
-* Resnet18 trained on CIFAR-10:
-```bash
-python ./train_rigl.py \
-  dataset=cifar10 \
-  model=resnet18
-```
-
-* ViT/B-16 trained on CIFAR-10:
-```bash
-python ./train_rigl.py \
-  dataset=imagenet \
-  model=vit
-```
+...
 
 ## Installation
-This project was developed using Python version >=3.10 and uses `poetry==1.6.1` to manage dependencies and build the project. 
-
-Installation instructions are provided for virtual enviornments, Compute Canada clusters, and Docker: 
+This project was developed using Python version >=3.10 and uses `poetry>=1.8.1` to manage dependencies and build the project. 
 
 ## Virtual Env
-        python -m venv .venv
-        source .venv/bin/activate
-        pip install --upgrade pip
-        pip install poetry==1.6.1
-        poetry install -vvv  # With install all dependency groups
-        git submodule update # Pull in cocoapi for detection / segmentation
-        cd ./src/cocoapi/PythonAPI
-        make & make install
-        cd ../../..  # back to workspace dir
-        pre-commit install-hooks  # For development
+  ...
 
 ## Docker
 For reproduction and instantiating replica's during training / inference, please use `Dockerfile` to build the image. Alternatively, you can pull the image from [Docker Hub](https://hub.docker.com/repository/docker/mklasby/condensed-sparsity). A large shm-size is required for pytorch to train ImageNet as this directory is used by the dataloader workers
-
-### Replica / Reproduction Container
-
-    docker build --file ./Dockerfile -t rigl-agent --shm-size=16gb .
-    docker run -itd --env-file ./.env --mount source=/datasets/ILSVRC2012,target=/datasets/ILSVRC2012,type=bind --gpus all --shm-size 16G rigl-agent:latest
-
 
 ### Development Container
 For development, we recommend using vscode's devcontainer functionality to build and launch the development container. A `devcontainer.json` schema is provided in `./.devcontainer/` and if the project working directory is opened in vscode, the application will prompt the user to reopen in the development container. Please refer to the `devcontainer.json` schema and `Dockerfile.dev` for specifics on the development container environment and build process. 
