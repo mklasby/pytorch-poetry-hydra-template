@@ -18,7 +18,6 @@ _TARGETS = {
 _SKIP_DIRS = {
     ".git",
     "data",
-    ""
 }
 
 _SKIP_FILES = {
@@ -32,12 +31,14 @@ def patch_token(match, inputs):
 def patch_file(child, inputs):
     if child.name in _SKIP_FILES:
         return
-    with open(child, "r+") as handle:
+    with open(child, "r") as handle:
         file_text = handle.read()
         for k in inputs.keys():
             re.sub(k, functools.partial(patch_token, inputs=inputs), file_text)
+    with open(child, "w") as handle:
+        # print(child)
         handle.write(file_text)
-        
+        handle.flush()
     return
 
 def walk_dir(dir: pathlib.Path, inputs: Dict[str, str]):
@@ -59,7 +60,7 @@ def get_inputs():
     print(f"You inputted: ")
     for k,v in inputs.items():
         print(f"{k}: {v}")
-    is_correct = input(f"Is this correct? y/n")
+    is_correct = input(f"Is this correct? y/n: ")
     if is_correct.lower() == "y":
         return inputs
     else:
