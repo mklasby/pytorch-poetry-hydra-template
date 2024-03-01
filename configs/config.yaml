@@ -1,0 +1,44 @@
+defaults:
+  - _self_ # We default to values in this file if group settings below are null
+  - data: default
+  - nn: default
+  - optim: default
+  - training: default
+  - compute: default
+
+# Path configuration
+paths:
+  base: ${oc.env:BASE_PATH}
+  data_folder: ${paths.base}/data
+  artifacts: ${paths.base}/artifacts
+  logs: ${paths.artifacts}/logs
+  checkpoints: ${paths.artifacts}/checkpoints
+
+# Wandb configs
+wandb:
+  log_to_wandb: True # Global switch for turning all wandb calls into no-ops, see ./src/package/utils/wandb_utils.py
+  project: <wandb-project>
+  entity: <wandb-entity>
+  start_method: thread
+
+# Hydra configs
+hydra:
+  run:
+    dir: ${paths.logs}
+
+# logging configs
+logging:
+  level: info
+
+# WARNING: The following config groups will override default configs
+data:
+  # data config overrides
+
+nn:
+  # neural network config overrides
+
+training:
+  # training config overrides
+
+optim:
+  # optimizer configs overrides

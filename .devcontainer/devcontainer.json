@@ -1,0 +1,42 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.231.3/containers/docker-existing-dockerfile
+{
+	"name": "Existing Dockerfile",
+	// Sets the run context to one level up instead of the .devcontainer folder.
+	"context": "..",
+	// Update the 'dockerFile' property if you aren't using the standard 'Dockerfile' filename.
+	"dockerFile": "../Dockerfile.dev",
+	// Add the IDs of extensions you want installed when the container is created.
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-python.python",
+				"njpwerner.autodocstring",
+				"ms-python.flake8",
+				"ms-python.black-formatter",
+				"iliazeus.vscode-ansi",
+			],
+			"settings": {
+				"terminal.integrated.defaultProfile.linux": "bash",
+			},
+		}
+	},
+	"workspaceMount": "source=${localWorkspaceFolder}/,target=<workspaceFolder>,type=bind",
+	"workspaceFolder": "<workspaceFolder>",
+	"mounts": [
+		"source=/scratch/,target=/scratch/,type=bind",
+		// other sources as req'd
+	],
+	"runArgs": [
+		"--gpus",
+		"all",
+		"--env-file",
+		".env",
+		"--shm-size",
+		"16G",
+		"--cap-add=sys_nice",
+		"--network=host",
+	],
+	// We need to run this again since the .gitconfig that was initialized in dockerfile is overwritten with host .gitconfig during devcontainer build
+	"postStartCommand": "git config --global --add safe.directory ${containerEnv:WORKSPACE_DIR} && git init . && . ${containerEnv:BUILD_PATH}/.venv/bin/activate && poetry install -vvv && pre-commit install-hooks"
+}
