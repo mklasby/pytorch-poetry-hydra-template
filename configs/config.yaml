@@ -8,7 +8,7 @@ defaults:
 
 # Path configuration
 paths:
-  base: ${oc.env:BASE_PATH}
+  base: ${oc.env:BASE_PATH} # Path project folder
   data_folder: ${paths.base}/data
   artifacts: ${paths.base}/artifacts
   logs: ${paths.artifacts}/logs

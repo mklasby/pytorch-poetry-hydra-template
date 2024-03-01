@@ -9,7 +9,7 @@
 #SBATCH --time=1-12:00:00
 #SBATCH --mail-user=<email>
 #SBATCH --mail-type=BEGIN,END,FAIL
-#SBATCH --account=<drac-acount>
+#SBATCH --account=<drac-account>
 
 ## RUN SCRIPT ##
 ./scripts/build_cc_venv.sh
