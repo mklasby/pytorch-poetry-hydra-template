@@ -3,7 +3,7 @@ name = "<<project-name>>"
 version = "0.1.0"
 description = ""
 authors = []
-homepage = ""
+homepage = "<<github-repo>>"
 readme = "README.md"
 license = "MIT"
 keywords = []
@@ -22,11 +22,12 @@ packages= [
 
 [tool.poetry.dependencies]
 python = ">=3.10,<3.11"
-torch={version="2.1.2+cu121", source="torch_repo"}
+torch={version="2.2.1+cu121", source="torch_repo"}
 torchvision={version="^0.17.1+cu121", source="torch_repo"}
 hydra-core = "^1.3.2"
 python-dotenv="^1"
 wandb="^0.16.3"
+rpds-py="0.17.1"  # matches nvidia container
 
 [[tool.poetry.source]]
 name = "torch_repo"
@@ -48,8 +49,7 @@ main = "main:main"
 
 
 [build-system]
-# requires = ["poetry-core>=<<poetry-version>>"]
-requires = ["poetry-core>=1.8.1"]
+requires = ["poetry-core>=<<poetry-version>>"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.black]

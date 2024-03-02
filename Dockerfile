@@ -1,3 +1,4 @@
+# TODO: Update prod / replica container
 FROM nvcr.io/nvidia/pytorch:24.02-py3
 
 ARG USERNAME=<<user>>
