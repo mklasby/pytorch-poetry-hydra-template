@@ -8,17 +8,17 @@ defaults:
 
 # Path configuration
 paths:
-  base: ${oc.env:BASE_PATH} # Path project folder
-  data_folder: ${paths.base}/data
-  artifacts: ${paths.base}/artifacts
+  root: ${oc.env:WORKING_DIR} # Path project folder
+  data_folder: ${paths.root}/data
+  artifacts: ${paths.root}/artifacts
   logs: ${paths.artifacts}/logs
   checkpoints: ${paths.artifacts}/checkpoints
 
 # Wandb configs
 wandb:
   log_to_wandb: True # Global switch for turning all wandb calls into no-ops, see ./src/package/utils/wandb_utils.py
-  project: <wandb-project>
-  entity: <wandb-entity>
+  project: <<wandb-project>>
+  entity: <<wandb-entity>>
   start_method: thread
 
 # Hydra configs

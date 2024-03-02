@@ -40,7 +40,7 @@ if __name__ == "__main__":
     print("Downloading runs...")
     api = wandb.Api(timeout=30)
     # Project is specified by <entity/project-name>
-    runs = api.runs("<wandb-entity>/<wandb-project-name>")
+    runs = api.runs("<<wandb-entity>>/<wandb-project-name>")
     summary_list, config_list, name_list, state_list, id_list, tags = (
         [],
         [],
