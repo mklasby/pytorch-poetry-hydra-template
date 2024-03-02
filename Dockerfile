@@ -1,29 +1,15 @@
-# Global ARGs for all build stages
-# https://docs.docker.com/build/building/multi-stage/
+FROM nvcr.io/nvidia/pytorch:24.02-py3
 
-ARG USERNAME=user
-ARG WORKING_DIR=/home/user/condensed-sparsity
-ARG USER_UID=1000003
-ARG USER_GID=1000001
-
-FROM pytorch/pytorch:2.0.1-cuda11.7-cudnn8-devel AS pytorch-base
-ARG USERNAME
-ARG WORKING_DIR
-ARG USER_UID
-ARG USER_GID
+ARG USERNAME=<<user>>
+ARG WORKING_DIR=<<working-dir>>
+ARG USER_UID=<<uid>>
+ARG USER_GID=<<gid>>
 
 SHELL ["/bin/bash", "-c"]
 
 # Create the user
 RUN groupadd --gid $USER_GID ${USERNAME} \
     && useradd --uid $USER_UID --gid $USER_GID -m ${USERNAME}
-
-# Development extras
-FROM pytorch-base AS dev-container-base
-ARG USERNAME
-ARG WORKING_DIR
-ARG USER_UID
-ARG USER_GID
 
 # Install git/ssh/tmux
 RUN apt-get update \
