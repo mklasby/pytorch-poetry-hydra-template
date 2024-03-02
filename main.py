@@ -8,5 +8,6 @@ def main(cfg: omegaconf.DictConfig) -> None:
     dotenv.load_dotenv(dotenv_path=".env", override=True)
     ...
 
+
 if __name__ == "__main__":
     main()
