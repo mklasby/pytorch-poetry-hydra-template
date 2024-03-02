@@ -21,8 +21,9 @@
 			},
 		}
 	},
-	"workspaceMount": "source=${localWorkspaceFolder}/,target=<<working-dir>>,type=bind",
-	"workspaceFolder": "<<working-dir>>",
+	// "workspaceMount": "source=${localWorkspaceFolder}/,target=<<working-dir>>,type=bind",
+	"workspaceMount": "source=${localWorkspaceFolder}/,target=/home/mike/pytorch-poetry-hydra-template,type=bind",
+	"workspaceFolder": "/home/mike/pytorch-poetry-hydra-template",
 	"mounts": [
 		"source=/scratch/,target=/scratch/,type=bind",
 		// other sources as req'd

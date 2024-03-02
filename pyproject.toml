@@ -48,7 +48,8 @@ main = "main:main"
 
 
 [build-system]
-requires = ["poetry-core>=<<poetry-version>>"]
+# requires = ["poetry-core>=<<poetry-version>>"]
+requires = ["poetry-core>=1.8.1"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.black]

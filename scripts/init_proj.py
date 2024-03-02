@@ -1,3 +1,4 @@
+import os
 import pathlib
 import re
 import subprocess
@@ -16,7 +17,11 @@ _TARGETS = {
     "<<wandb-api-key>>": "wandb API key",
 }
 
-_TEMPLATE_CONFIG = {"<<poetry-version>>": "1.8.1"}
+_TEMPLATE_CONFIG = {"<<poetry-version>>": "1.8.1",
+                    "<<user>>": os.environ["USER"],
+                    "<<uid>>": os.geteuid(),
+                    "<<gid>>": os.getegid(),
+                    }
 
 _SKIP_DIRS = {
     ".git",
