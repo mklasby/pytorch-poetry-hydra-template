@@ -1,5 +1,6 @@
 import pathlib
 import re
+import subprocess
 from typing import Dict
 import functools
 
@@ -13,6 +14,9 @@ _TARGETS = {
     "<<wandb-project>>": "wandb project",
     "<<wandb-entity>>": "wandb entity",
     "<<wandb-key>>": 'wandb API key',
+}
+
+_TEMPLATE_CONFIG = {
     "<<poetry-version>>": "1.8.1"
 }
 
@@ -52,6 +56,9 @@ def walk_dir(dir: pathlib.Path, inputs: Dict[str, str]):
         else:
             raise RuntimeError("Not a dir or a file!?")
 
+def generate_env_file():
+    subprocess.call("cp", ".env.template", ".env")
+
 def get_inputs():
     inputs = {}
     for k,v in _TARGETS.items():
@@ -61,12 +68,13 @@ def get_inputs():
         print(f"{k}: {v}")
     is_correct = input(f"Is this correct? y/n: ")
     if is_correct.lower() == "y":
-        return inputs
+        return inputs.update(_TEMPLATE_CONFIG)
     else:
         get_inputs()
 
 def main():
     inputs = get_inputs()
+    generate_env_file()
     walk_dir(pathlib.Path.cwd(), inputs)
     return
 
