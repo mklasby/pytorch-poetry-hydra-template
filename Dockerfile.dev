@@ -1,22 +1,20 @@
 FROM nvcr.io/nvidia/pytorch:24.02-py3
 
-# ARG USERNAME=<<user>>
-# ARG WORKING_DIR=<<working-dir>>
-# ARG USER_UID=<<uid>>
-# ARG USER_GID=<<gid>>
-# ARG POETRY_VERSION=<<poetry-version>>
-
-ARG USERNAME=mike
-ARG WORKING_DIR=/home/mike/pytorch-poetry-hydra-template
-ARG USER_UID=1002
-ARG USER_GID=1002
-ARG POETRY_VERSION=1.8.1
+ARG USERNAME=<<user>>
+ARG WORKING_DIR=<<working-dir>>
+ARG USER_UID=<<uid>>
+ARG USER_GID=<<gid>>
+ARG POETRY_VERSION=<<poetry-version>>
 
 SHELL ["/bin/bash", "-c"]
 
 # Use a non-root user
 ARG USER_UID=${USER_UID}
 ARG USER_GID=${USER_GID}
+
+# Let our user use the base python install, no venv
+# NOTE: Slow part of build, consider using venv instead and removing this line
+RUN chmod +777 -R ${PYTHON_PARENT_DIR}
 
 # Create the user
 RUN groupadd --gid $USER_GID ${USERNAME} \
@@ -42,24 +40,25 @@ ENV POETRY_VERSION="${POETRY_VERSION}" \
     POETRY_NO_INTERACTION=1 \
     POETRY_VIRTUALENVS_IN_PROJECT=false \
     POETRY_VIRTUALENVS_CREATE=false \
-    # BUILD_PATH="/home/${USERNAME}/build" \
-    # VENV_PATH="/home/${USERNAME}/build/.venv" \
-    WORKING_DIR=${WORKING_DIR}
-# PATH="/home/${USERNAME}/.local/bin:${PATH}" \
+    WORKING_DIR=${WORKING_DIR} \
+    PATH="/home/${USERNAME}/poetry/bin:${PATH}"
+
+# Optional ENVs if you prefer to build a venv in docker image.
+# POETRY_VIRTUALENVS_CREATE=true \
+# BUILD_PATH="/home/${USERNAME}/build" \
+# VENV_PATH="/home/${USERNAME}/build/.venv" \
 # VIRTUAL_ENV=$VENV_PATH
 
-# ENV PATH="$VENV_PATH/bin:$POETRY_HOME/bin:$PATH"
+# Additional steps for building to venv
+# ENV PATH="$VENV_PATH/bin:$PATH"
+# RUN mkdir ${BUILD_PATH}
+# WORKDIR ${BUILD_PATH}
+
 RUN curl -sSL https://install.python-poetry.org | python3 - && exec bash
 
 # Install project requirements 
-# RUN mkdir ${BUILD_PATH}
-# WORKDIR ${BUILD_PATH}
 COPY ./ ./
-RUN python -m venv .venv && \ 
-    source .venv/bin/activate && \
-    pip install --upgrade pip && \
+RUN pip install --upgrade pip && \
     poetry install -vvv --no-root
-# poetry install -vvv --no-root && \
-# echo "source ${BUILD_PATH}/.venv/bin/activate" >> /home/$USERNAME/.bashrc
 
 WORKDIR $WORKING_DIR
