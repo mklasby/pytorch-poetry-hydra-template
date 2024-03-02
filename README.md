@@ -7,7 +7,7 @@
 ...
 
 ## Installation
-This project was developed using Python version >=3.10 and uses `poetry>=1.8.1` to manage dependencies and build the project. 
+This project was developed using Python version >=3.10 and uses `poetry>=1.8` to manage dependencies and build the project. 
 
 ## Virtual Env
   ...

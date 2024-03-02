@@ -8,24 +8,28 @@ cd ~
 git clone <<repo-url>>.git
 cd <<working-dir>>
 git checkout -t origin/main
-# Create .env
-cp ./.env.template ./.env
-# Need to manually populate for now!
+
+# TODO: call from python
+# # Create .env
+# cp ./.env.template ./.env
+# # Need to manually populate for now!
 
 # Build venv
 rm -rf ./.venv
 python3 -m venv .venv
 source .venv/bin/activate
 pip3 install --upgrade pip
-pip3 install poetry==1.8.1
+pip3 install poetry==<<poetry-version>>
 poetry install -vvv
 
 # Setup submodules
 git submodule init && git submodule update
 # Optionally build submodules here if required
 
-# Add wandb to env
-echo 'export WANDB_API_KEY=<<wandb-key>>' >> ~/.bashrc
+
+# TODO: Do I need to populate this? Just use .env
+# # Add wandb to env
+# echo 'export WANDB_API_KEY=$WANDB_API_KEY' >> ~/.bashrc
 
 # Copy data and unzip data, if required
 sudo apt-get install unzip

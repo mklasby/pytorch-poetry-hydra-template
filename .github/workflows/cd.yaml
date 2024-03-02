@@ -26,8 +26,8 @@ jobs:
       - name: Upgrade pip
         run: pip install --upgrade pip
 
-      - name: Install poetry 1.8.1
-        run: pip install poetry==1.8.1
+      - name: Install poetry <<poetry-version>>
+        run: pip install poetry==<<poetry-version>>
 
       # TODO: If we need SSH agent, need repo admin to add secret key
       # - name: Setup SSH Agent
