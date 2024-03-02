@@ -34,9 +34,8 @@ def patch_file(child, inputs):
     with open(child, "r") as handle:
         file_text = handle.read()
         for k in inputs.keys():
-            re.sub(k, functools.partial(patch_token, inputs=inputs), file_text)
+            file_text = re.sub(k, functools.partial(patch_token, inputs=inputs), file_text)
     with open(child, "w") as handle:
-        # print(child)
         handle.write(file_text)
         handle.flush()
     return
@@ -56,7 +55,6 @@ def get_inputs():
     inputs = {}
     for k,v in _TARGETS.items():
         inputs[k] = input(f"Please input your {v}: ")
-    inputs["<workspaceFolder>"] = inputs["<<working-dir>>"]
     print(f"You inputted: ")
     for k,v in inputs.items():
         print(f"{k}: {v}")
