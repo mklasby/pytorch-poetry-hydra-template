@@ -5,7 +5,7 @@ cd ~
 
 # Clone repo and cd into it
 # Assumes ssh key already added to github.
-git clone <<repo-url>>.git
+git clone <<repo-url>>.git <<working-dir>>
 cd <<working-dir>>
 git checkout -t origin/main
 
