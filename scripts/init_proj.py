@@ -4,15 +4,15 @@ from typing import Dict
 import functools
 
 _TARGETS = {
-    "<name>": "name",
-    "<email>": "email",
-    "<drac-account>": "DRAC Account (def-xxxx)",
-    "<working-dir>": "working directory",
-    "<package-name>": "package name",
-    "<repo>": "project repo on github",
-    "<wandb-project>": "wandb project",
-    "<wandb-entity>": "wandb entity",
-    "<working-dir>": "working directory",
+    "<<name>>": "Name for git config",
+    "<<email>>": "Email for git config",
+    "<<drac-account>>": "DRAC Account (def-xxxx)",
+    "<<working-dir>>": "Full path to working directory",
+    "<<project-name>>": "Name of project and python package",
+    "<<repo-url>>": "The URL of the project on github",
+    "<<wandb-project>>": "wandb project",
+    "<<wandb-entity>>": "wandb entity",
+    "<<wandb-key>>": 'wandb API key'
 }
 
 _SKIP_DIRS = {
@@ -56,7 +56,7 @@ def get_inputs():
     inputs = {}
     for k,v in _TARGETS.items():
         inputs[k] = input(f"Please input your {v}: ")
-    inputs["<workspaceFolder>"] = inputs["<working-dir>"]
+    inputs["<workspaceFolder>"] = inputs["<<working-dir>>"]
     print(f"You inputted: ")
     for k,v in inputs.items():
         print(f"{k}: {v}")

@@ -5,10 +5,9 @@ cd ~
 
 # Clone repo and cd into it
 # Assumes ssh key already added to github.
-git clone git@github.com:<repo>
-cd <repo>
+git clone <<repo-url>>.git
+cd <<working-dir>>
 git checkout -t origin/main
-
 # Create .env
 cp ./.env.template ./.env
 # Need to manually populate for now!
@@ -26,7 +25,7 @@ git submodule init && git submodule update
 # Optionally build submodules here if required
 
 # Add wandb to env
-echo 'export WANDB_API_KEY=<wandb-key>' >> ~/.bashrc
+echo 'export WANDB_API_KEY=<<wandb-key>>' >> ~/.bashrc
 
 # Copy data and unzip data, if required
 sudo apt-get install unzip
@@ -35,7 +34,7 @@ cd ~/scratch/ILSVRC
 unzip '*.zip'
 
 # git conifg
-git config --global user.name "<name>"
-git config --global user.email "<email>"
+git config --global user.name "<<name>>"
+git config --global user.email "<<email>>"
 echo "Build completed!"
 

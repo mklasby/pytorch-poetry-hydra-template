@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "<package-name>"
+name = "<<project-name>>"
 version = "0.1.0"
 description = ""
 authors = []
@@ -17,7 +17,7 @@ classifiers = [
     "Topic :: Software Development :: Libraries :: Python Modules",
 ]
 packages= [
-    {include = "<package-name>", from = "src"},
+    {include = "<<project-name>>", from = "src"},
 ]
 
 [tool.poetry.dependencies]
@@ -43,8 +43,8 @@ jupytext = "^1.16.1"
 main = "main:main"
 
 [tool.poetry.urls]
-"Issues" = "<github-repo>/issues"
-"Repo" = "<github-repo>"
+"Issues" = "<<repo-url>>/issues"
+"Repo" = "<<repo-url>>"
 
 
 [build-system]

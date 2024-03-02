@@ -1,6 +1,6 @@
-# <repo>
-![CI Pipeline](https://github.com/calgaryml/<repo>/actions/workflows/ci.yaml/badge.svg)
-![CD Pipeline](https://github.com/calgaryml/<repo>/actions/workflows/cd.yaml/badge.svg)
+# <<repo>>
+![CI Pipeline](<<repo-url>>/actions/workflows/ci.yaml/badge.svg)
+![CD Pipeline](<<repo-url>>/actions/workflows/cd.yaml/badge.svg)
 
 
 ## Repository Structure
