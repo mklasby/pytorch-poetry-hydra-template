@@ -12,7 +12,8 @@ _TARGETS = {
     "<<repo-url>>": "The URL of the project on github",
     "<<wandb-project>>": "wandb project",
     "<<wandb-entity>>": "wandb entity",
-    "<<wandb-key>>": 'wandb API key'
+    "<<wandb-key>>": 'wandb API key',
+    "<<poetry-version>>": "1.8.1"
 }
 
 _SKIP_DIRS = {
