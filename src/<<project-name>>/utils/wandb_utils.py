@@ -44,9 +44,9 @@ def init_wandb(cfg: omegaconf.DictConfig, wandb_init_kwargs: Dict[str, Any]):
         )
         wandb.watch = _wandb_log_check(wandb.watch, cfg.wandb.log_to_wandb)
         return None
-    _ = WandbRunName(name=cfg.experiment.name)  # Verify name is OK
+    _ = WandbRunName(name=cfg.wandb.name)  # Verify name is OK
     run = wandb.init(
-        name=cfg.experiment.name,
+        name=cfg.wandb.name,
         entity=cfg.wandb.entity,
         project=cfg.wandb.project,
         config=omegaconf.OmegaConf.to_container(
