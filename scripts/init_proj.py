@@ -66,6 +66,10 @@ def walk_dir(dir: pathlib.Path, inputs: Dict[str, str]):
 def generate_env_file():
     subprocess.run(["cp", ".env.template", ".env"])
 
+def rename_python_package(inputs: Dict[str, str]):
+    p = pathlib.Path.cwd() / "src" / "<<project-name>>"
+    p.rename(pathlib.Path.cwd() / "src" / inputs["<<project-name>>"])
+
 
 def get_inputs():
     inputs = {}
@@ -88,6 +92,7 @@ def main():
     inputs = get_inputs()
     generate_env_file()
     walk_dir(pathlib.Path.cwd(), inputs)
+    rename_python_package(inputs)
     return
 
 
