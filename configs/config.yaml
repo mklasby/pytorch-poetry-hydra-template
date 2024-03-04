@@ -1,12 +1,11 @@
 defaults:
-  - _self_ # We default to values in this file if group settings below are null
   - data: default
   - nn: default
   - optim: default
   - training: default
-  - compute: default
+  - _self_ # We override group configs above with values defined in this config file!
 
-# Path configuration
+# path configuration
 paths:
   root: ${oc.env:WORKING_DIR} # Path project folder
   data_folder: ${paths.root}/data
@@ -14,14 +13,16 @@ paths:
   logs: ${paths.artifacts}/logs
   checkpoints: ${paths.artifacts}/checkpoints
 
-# Wandb configs
+# wandb configs
 wandb:
   log_to_wandb: True # Global switch for turning all wandb calls into no-ops, see ./src/package/utils/wandb_utils.py
+  name: my-wandb-run-name  # Update as required to name run on wandb
+  run_id: null  # Keep null for fresh runs, otherwise, set to run_id to load ckpt
   project: <<wandb-project>>
   entity: <<wandb-entity>>
   start_method: thread
 
-# Hydra configs
+# hydra configs
 hydra:
   run:
     dir: ${paths.logs}
@@ -30,15 +31,19 @@ hydra:
 logging:
   level: info
 
-# WARNING: The following config groups will override default configs
+# WARNING: The following config groups will override config groups specified in defaults!!!
+# data config overrides
 data:
-  # data config overrides
 
+# neural network config overrides
 nn:
-  # neural network config overrides
 
+# training config overrides
 training:
-  # training config overrides
+  resume: False  # Resume run from ckpt
 
+# optimizer configs overrides
 optim:
-  # optimizer configs overrides
+
+# utils configs overrides
+utils:
