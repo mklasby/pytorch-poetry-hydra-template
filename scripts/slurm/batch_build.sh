@@ -12,4 +12,4 @@
 #SBATCH --account=<<drac-account>>
 
 ## RUN SCRIPT ##
-./scripts/build_cc_venv.sh
+./scripts/build_drac_venv.sh

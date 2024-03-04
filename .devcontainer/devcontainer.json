@@ -21,11 +21,10 @@
 			},
 		}
 	},
-	// "workspaceMount": "source=${localWorkspaceFolder}/,target=<<working-dir>>,type=bind",
 	"workspaceMount": "source=${localWorkspaceFolder}/,target=<<working-dir>>,type=bind",
 	"workspaceFolder": "<<working-dir>>",
 	"mounts": [
-		"source=/scratch/,target=/scratch/,type=bind",
+		// "source=/scratch/,target=/scratch/,type=bind",
 		// other sources as req'd
 	],
 	"runArgs": [

@@ -23,11 +23,11 @@ ENV POETRY_VERSION="${POETRY_VERSION}" \
 
 RUN curl -sSL https://install.python-poetry.org | python3 - && exec bash
 
-# Install project requirements 
+# Install project requirements without dev dep.
 RUN mkdir ${WORKING_DIR}
 WORKDIR ${WORKING_DIR} 
 COPY ./ ./
 RUN pip install --upgrade pip && \
-    poetry install -vvv
+    poetry install -vvv --without dev
 
 WORKDIR $WORKING_DIR
