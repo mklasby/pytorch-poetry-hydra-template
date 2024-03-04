@@ -7,7 +7,7 @@ import functools
 
 _TARGETS = {
     "<<name>>": "Name for git config",
-    "<<email>>": "Email for git config",
+    "<<email>>": "Email for git config and/or slurm begin/end/fail notices",
     "<<drac-account>>": "DRAC Account (def-xxxx)",
     "<<working-dir>>": "Full path to working directory",
     "<<project-name>>": "Name of project and python package",
@@ -17,11 +17,12 @@ _TARGETS = {
     "<<wandb-api-key>>": "wandb API key",
 }
 
-_TEMPLATE_CONFIG = {"<<poetry-version>>": "1.8.1",
-                    "<<user>>": os.environ["USER"],
-                    "<<uid>>": os.geteuid(),
-                    "<<gid>>": os.getegid(),
-                    }
+_TEMPLATE_CONFIG = {
+    "<<poetry-version>>": "1.8.1",
+    "<<user>>": os.environ["USER"],
+    "<<uid>>": os.geteuid(),
+    "<<gid>>": os.getegid(),
+}
 
 _SKIP_DIRS = {
     ".git",
@@ -70,6 +71,8 @@ def get_inputs():
     inputs = {}
     for k, v in _TARGETS.items():
         inputs[k] = input(f"Please input your {v}: ")
+    # We don't want extra dir delimiter in working-dir
+    inputs["<<working-dir>>"] = inputs["<<working-dir>>"].rstrip("/")
     print(f"You inputted: ")
     for k, v in inputs.items():
         print(f"{k}: {v}")

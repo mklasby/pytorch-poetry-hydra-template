@@ -2,9 +2,11 @@ from typing import Callable, Any, Dict
 import omegaconf
 import wandb
 
+
 class WandbRunNameException(Exception):
     def __init__(self, message, name) -> None:
         super().__init__(f"Wandb run name of {name} is invalid! " f"{message}")
+
 
 class WandbRunName:
     def __init__(self, name: str):
