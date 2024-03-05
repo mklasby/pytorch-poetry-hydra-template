@@ -2,8 +2,8 @@
 name = "<<project-name>>"
 version = "0.1.0"
 description = ""
-authors = []
-homepage = "<<github-repo>>"
+authors = ["<<name>>"]
+homepage = "<<repo-url>>"
 readme = "README.md"
 license = "MIT"
 keywords = []
@@ -39,6 +39,7 @@ flake8 = "^7.0.0"
 black = "^24.2.0"
 jupyter = "^1.0.0"
 jupytext = "^1.16.1"
+pre-commit="^3.6.2"
 
 [tool.poetry.scripts]
 main = "main:main"
