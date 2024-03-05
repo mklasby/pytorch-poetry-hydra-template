@@ -28,6 +28,6 @@ RUN mkdir ${WORKING_DIR}
 WORKDIR ${WORKING_DIR} 
 COPY ./ ./
 RUN pip install --upgrade pip && \
-    poetry install -vvv --without dev
+    poetry install -vvv --without dev --no-cache
 
 WORKDIR $WORKING_DIR
