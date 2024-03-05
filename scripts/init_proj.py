@@ -20,8 +20,8 @@ _TARGETS = {
 _TEMPLATE_CONFIG = {
     "<<poetry-version>>": "1.8.1",
     "<<user>>": os.environ["USER"],
-    "<<uid>>": os.geteuid(),
-    "<<gid>>": os.getegid(),
+    "<<uid>>": str(os.geteuid()),
+    "<<gid>>": str(os.getegid()),
 }
 
 _SKIP_DIRS = {
@@ -74,7 +74,7 @@ def rename_python_package(inputs: Dict[str, str]):
 def get_inputs():
     inputs = {}
     for k, v in _TARGETS.items():
-        inputs[k] = input(f"Please input your {v}: ")
+        inputs[k] = str(input(f"Please input your {v}: "))
     # We don't want extra dir delimiter in working-dir
     inputs["<<working-dir>>"] = inputs["<<working-dir>>"].rstrip("/")
     print(f"You inputted: ")

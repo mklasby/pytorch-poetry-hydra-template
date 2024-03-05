@@ -12,10 +12,6 @@ SHELL ["/bin/bash", "-c"]
 ARG USER_UID=${USER_UID}
 ARG USER_GID=${USER_GID}
 
-# Let our user use the base python install, no venv
-# NOTE: Slow part of build, consider using venv instead and removing this line
-RUN chmod +777 -R ${PYTHON_PARENT_DIR}
-
 # Create the user
 RUN groupadd --gid $USER_GID ${USERNAME} \
     && useradd --uid $USER_UID --gid $USER_GID -m ${USERNAME}
@@ -26,7 +22,7 @@ RUN mkdir ${WORKING_DIR}/ && \
 # Install git/ssh/tmux
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y \
-    git ssh tmux vim curl htop sudo unzip
+    git ssh tmux vim curl htop sudo unzip python3-venv
 
 # Give sudo privledges  to user
 RUN echo ${USERNAME} ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/${USERNAME} \
@@ -40,28 +36,30 @@ ENV POETRY_VERSION="${POETRY_VERSION}" \
     POETRY_NO_INTERACTION=1 \
     POETRY_VIRTUALENVS_IN_PROJECT=false \
     POETRY_VIRTUALENVS_CREATE=false \
+    POETRY_CACHE_DIR="/home/${USERNAME}/.cache/pypoetry" \
     WORKING_DIR=${WORKING_DIR} \
-    PATH="/home/${USERNAME}/poetry/bin:${PATH}"
+    BUILD_PATH="/home/${USERNAME}/build" \
+    VIRTUAL_ENV="/home/${USERNAME}/build/.venv"
+ENV PATH="${VIRTUAL_ENV}/bin:${POETRY_HOME}/bin:${PATH}"
 
-# Optional ENVs if you prefer to build a venv in docker image.
-# POETRY_VIRTUALENVS_CREATE=true \
-# BUILD_PATH="/home/${USERNAME}/build" \
-# VENV_PATH="/home/${USERNAME}/build/.venv" \
-# VIRTUAL_ENV=$VENV_PATH
+# Create and move context to build path
+RUN mkdir ${BUILD_PATH}
+WORKDIR ${BUILD_PATH}
 
-# Additional steps for building to venv
-# ENV PATH="$VENV_PATH/bin:$PATH"
-# RUN mkdir ${BUILD_PATH}
-# WORKDIR ${BUILD_PATH}
-
-# If not using venv, we move to workdir and build there
-WORKDIR ${WORKING_DIR}
-
+# Install poetry
 RUN curl -sSL https://install.python-poetry.org | python3 - && exec bash
 
-# Install project requirements 
-COPY ./ ./
-RUN pip install --upgrade pip && \
-    poetry install -vvv --no-root
+# Install project requirements, optionally copy lock file if present
+COPY ./pyproject.toml poetry.lock* ./
 
-WORKDIR $WORKING_DIR
+# Init venv and upgrade pip
+RUN python -m venv .venv && \
+    source .venv/bin/activate && \
+    pip install --upgrade pip
+
+# Install project dependencies and use buildkit cache to speed up this step for subsequent builds
+# TODO: Get cache working for dependencies
+# RUN --mount=type=cache,target=${POETRY_CACHE_DIR},sharing=locked poetry install -v --no-root
+RUN poetry install -v --no-root
+
+WORKDIR ${WORKING_DIR}
