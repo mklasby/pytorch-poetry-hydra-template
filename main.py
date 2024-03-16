@@ -11,6 +11,6 @@ def main(cfg: omegaconf.DictConfig) -> None:
 
 
 if __name__ == "__main__":
-    # Override env vars using .env BEFORE initializating hydra config!
+    # Override env vars using .env BEFORE initializing hydra config!
     dotenv.load_dotenv(dotenv_path=".env", override=True)
     main()

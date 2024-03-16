@@ -1,9 +1,13 @@
 defaults:
   - data: default
-  - nn: default
+  - models: default
   - optim: default
   - training: default
   - _self_ # We override group configs above with values defined in this config file!
+
+# SMOKE TEST
+SMOKE_TEST: False # If True, train for a single step and exit training loop
+log_interval: 100 # Number of "effective" mini-batch steps to wait between logging
 
 # path configuration
 paths:
@@ -15,35 +19,57 @@ paths:
 
 # wandb configs
 wandb:
-  log_to_wandb: True # Global switch for turning all wandb calls into no-ops, see ./src/package/utils/wandb_utils.py
-  name: my-wandb-run-name  # Update as required to name run on wandb
-  run_id: null  # Keep null for fresh runs, otherwise, set to run_id to load ckpt
-  project: <<wandb-project>>
-  entity: <<wandb-entity>>
+  ENABLE: True # Global switch for turning all wandb calls into no-ops, see ./src/package/utils/wandb_utils.py
+  run_id: null # Keep null for fresh runs, otherwise, set to run_id to load ckpt
+  name: my-wandb-run-name # Update as required to name run on wandb
+  project: sparsimony
+  entity: mklasby
   start_method: thread
 
 # hydra configs
 hydra:
   run:
     dir: ${paths.logs}
+  job_logging:
+    formatters:
+      verbose:
+        format: "[%(levelname)s] %(asctime)s %(name)s - %(funcName)s (%(lineno)d) : %(message)s"
+        datefmt: "%Y-%m-%d %H:%M:%S"
+    handlers:
+      console:
+        class: logging.StreamHandler
+        formatter: verbose
+        stream: ext://sys.stdout
+      file:
+        class: logging.FileHandler
+        formatter: verbose
+        filename: ${hydra.runtime.output_dir}/${now:%Y-%m-%d}-${now:%H-%M-%S}-${hydra.job.name}.log
+    root:
+      level: DEBUG
+      handlers:
+        - console
+        - file
+    disable_existing_loggers: false
 
-# logging configs
-logging:
-  level: info
+# WARNING: The following config groups will override config groups specified in
+# defaults list. Make sure to comment out if no overrides provided
 
-# WARNING: The following config groups will override config groups specified in defaults!!!
 # data config overrides
-data:
+# data:
 
-# neural network config overrides
-nn:
+# models config overrides
+# models:
 
 # training config overrides
 training:
-  resume: False  # Resume run from ckpt
+  resume: False # Resume run from ckpt
+  use_amp: False # Use automatic mixed precision
 
 # optimizer configs overrides
-optim:
+# optim:
+
+# scheduler config group overrides:
+# scheduler:
 
 # utils configs overrides
-utils:
+# utils:
