@@ -1,1 +1,1 @@
-from ._dataloader_registry import DataLoaderRegistry
+from .dataloader_registry import DataLoaderRegistry
