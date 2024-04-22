@@ -16,7 +16,7 @@ ARG USER_GID=${USER_GID}
 RUN groupadd --gid $USER_GID ${USERNAME} \
     && useradd --uid $USER_UID --gid $USER_GID -m ${USERNAME}
 
-RUN mkdir ${WORKING_DIR}/ && \
+RUN mkdir -p ${WORKING_DIR}/ && \
     chown -R $USER_GID:$USER_UID ${WORKING_DIR}
 
 # Install git/ssh/tmux
@@ -43,7 +43,7 @@ ENV POETRY_VERSION="${POETRY_VERSION}" \
 ENV PATH="${VIRTUAL_ENV}/bin:${POETRY_HOME}/bin:${PATH}"
 
 # Create and move context to build path
-RUN mkdir ${BUILD_PATH}
+RUN mkdir -p ${BUILD_PATH}
 WORKDIR ${BUILD_PATH}
 
 # Install poetry

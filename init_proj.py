@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import os
 import pathlib
 import re
@@ -65,6 +67,7 @@ def walk_dir(dir: pathlib.Path, inputs: Dict[str, str]):
 
 def generate_env_file():
     subprocess.run(["cp", ".env.template", ".env"])
+
 
 def rename_python_package(inputs: Dict[str, str]):
     p = pathlib.Path.cwd() / "src" / "<<project-name>>"
