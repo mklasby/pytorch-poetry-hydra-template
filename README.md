@@ -16,7 +16,7 @@ The full stack includes:
 ## Getting started
 Steps to initialize your project:
 1. Create your project repo using this template
-2. `cd` into the project working directory and run `python ./scripts/init_proj.py`
+2. `cd` into the project working directory and run `init_proj.py`
 3. Respond to prompts from CLI. Your responses will be customize the template to your information and project specifics. You will be prompted to provide the following information:
    1. \<\<name\>\>: Name for git config
    2. \<\<email\>\>: Email for git config and/or slurm begin/end/fail notices
